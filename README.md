@@ -122,37 +122,24 @@
       $ az iot hub monitor-events --hub-name <iot hub name> --device-id  <devicename>
     ```  
 ## For sending command from iot hub to device,
-   - Open the new terminal on the host system and traverse to the repo directory.  Edit the c2d.py file and replace the ‘CONNECTION_STRING’ details with iothub primary connection string and replace the ‘DEVICE_ID’ details with device name.   
+   - Open the new terminal on the host system and traverse to the repo directory.  Edit the cloud2device.py file and replace the ‘CONNECTION_STRING’ details with iothub primary connection string and replace the ‘DEVICE_ID’ details with device name.   
   
   - Install the azure iot-hub on the host device.
   
     ```
       $ pip install azure-iot-hub 
     ``` 
-   - Execute the python script and send the commands via command line option. To start the 4k video recording on qcs610 
+   - Execute the python script and send the commands via command line option. To start the video streaming on qcs610 
      ```
-     $ python3 cloud2device.py start4k    
+     $ python3 cloud2device.py starttcp    
      ``` 
   -  To stop the current recording on qcs610
      ```   
-        $ python3 cloud2device.py stop4k    
+        $ python3 cloud2device.py stoptcp    
      ```
-  - For the different video options, you can refer the below table,
 
-      | Video options | start | stop | 
-      | :---: | :---: | :---: |
-      | 4K Video | start4k | stop4k |
-      | Hd video | startHD | stopHD |
-      | Tcp Streaming | videotcp | stoptcp |
+-  Once the qcs610 receives the command, it will start streaming the video. It will send the camera status to iothub and the message can be shown on the event monitoring terminal.
 
-
--  Once the qcs610 receives the command, it will start capturing the video based on the video options. It will send the camera status to iothub and the message can be shown on the event monitoring terminal.
-
-**To Download video**: 
-- Using the adb pull command we can download the video to the host system.
-    ```
-      $ adb pull /data/4k.mp4
-    ```   
 - To see the live streaming,  open the new terminal in the host system and enter below command. Also make sure you have installed the ‘vlc player’ on the host system in order to view video playback. 
    ```
       $ adb forward tcp:8900 tcp:8900
