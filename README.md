@@ -58,90 +58,100 @@ Steps to build and run the application:
 
 ## Building the camera application:
 **Step-1** : Enter below command to set up the cross compilation environment on the host system.
-  ```
+    ```
     $ git clone <source repository>
     $ cd  <source repository> 
     $ source /usr/local/oecore-x86_64/environment-setup-armv7ahf-neon-oe-linux-gnueabi
-  ```
+    ```
 **Step-2** :Build the camera application binary using below command .                                       
  **Note:**  before starting building, to add secure communication, open the main.c file and replace the connection string details with device primary connection string.  
- ```
+    ```
      $CC main.c video_record.c -o iottest `pkg-config --cflags --libs gstreamer-1.0`  -I ./azureiot/ -L ./lib -liothub_client -laziotsharedutil-liothub_client_mqtt_transport -liothub_client_amqp_transport -luamqp -lumqtt -lparson
- ```    
+     ```    
 
 **Step-3** : initialize the target board with root access.
-  ```
+      ```
       $ adb root 
       $ adb remount 
       $ adb shell  mount -o remount,rw /
       $ adb forward tcp:8900 tcp:8900
-  ```
+      ```
 **Step-4** : Push the application binary and azure iot shared library to the target board with adb command.
-   ```
+      ```
       $ adb push iottest /data/azure/
       $ adb push lib/  /data/azure/
-   ```      
+      ```      
 ## Execute the binary file in the target environment.
    - To start the application, run the below commands on the qcs610 board, 
-```
+     ```
      $ adb shell
      /#
- ``` 
+      ``` 
   -  To enable wifi connectivity on target board
-   ```  
-     /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/Wpa_Supplicant.conf -ddddt &
-     /# dhcpcd wlan0
-   ```  
+      ```  
+       /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/Wpa_Supplicant.conf -ddddt &
+       /# dhcpcd wlan0
+      ```  
    -  Export the shared library to the LD_LIBRARY_PATH
-  ```
-    / # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/azure/lib/
-    /# cd data/azure/
+      ```
+       / # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/azure/lib/
+       /# cd data/azure/
   
-  ```   
+      ```   
   - To start the application run below command
- ```
+      ```
  /# ./iottest
- ```
+       ```
  - After executing the above command, the qcs610 device will wait for the command from iot hub, once it receives, it will do the required command action.
 
 ## Event monitoring on azure iot hub,
-         Open the new terminal on the host system
-          Install azure cli on host system
-           $ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-          Login to azure 
-            $ az login
-           This will open the default browser, you can enter your login credentials. After login, for monitor the device messages, execute below command
-            $ az iot hub monitor-events --hub-name <iot hub name> --device-id  <devicename>
+  - Open the new terminal on the host system
+    Install azure cli on host system
+    ```   
+    $ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+   ```
+   Login to azure 
+   ```
+      $ az login
+    ```
+  - This will open the default browser, you can enter your login credentials. After login, for monitor the device messages, execute below command
+    ```      
+      $ az iot hub monitor-events --hub-name <iot hub name> --device-id  <devicename>
+    ```  
+## For sending command from iot hub to device,
+  - Open the new terminal on the host system and traverse to the repo directory.  Edit the c2d.py file and replace the ‘CONNECTION_STRING’ details with iothub primary connection string and replace the ‘DEVICE_ID’ details with device name.   
+  - Install the azure iot-hub on the host device.
+     ```
+      $ pip install azure-iot-hub 
+     ``` 
+   - Execute the python script and send the commands via command line option. To start the 4k video recording on qcs610 
+     ```
+     $ python3 c2d.py start4k    
+     ``` 
+  -  To stop the current recording on qcs610
+     ```   
+        $ python3 c2d.py stop4k    
+     ```
+  - For the different video options, you can refer the below table,
 
-For sending command from iot hub to device,
-          Open the new terminal on the host system and traverse to the repo directory.  Edit the c2d.py file and replace the ‘CONNECTION_STRING’ details with iothub primary connection string and replace the ‘DEVICE_ID’ details with device name.   
-          Install the azure iot-hub on the host device.
-           $ pip install azure-iot-hub 
-           Execute the python script and send the commands via command line option 
-           To start the 4k video recording on qcs610 
-           $ python3 c2d.py start4k    
-           To stop the current recording on qcs610
-           $ python3 c2d.py stop4k    
+| Video options | start | stop | 
+|  :---: | :---: | :---: |
+| 4K Video | start4k | stop4k |
+| Hd video | startHD | stopHD |
+| Tcp Streaming | videotcp | stoptcp |
 
-       For the different video options, you can refer the below table,
-Video options
-start
-       stop
-4K Video
-start4k
-stop4k
-Hd video
-      startHD
-stopHD
-Tcp Streaming
-videotcp
-stoptcp
-Once the qcs610 receives the command, it will start capturing the video based on the video options. It will send the camera status to iothub and the message can be shown on the event monitoring terminal.
 
-To Download video: 
-Using the adb pull command we can download the video to the host system.
-                 $ adb pull /data/4k.mp4
+-  Once the qcs610 receives the command, it will start capturing the video based on the video options. It will send the camera status to iothub and the message can be shown on the event monitoring terminal.
 
-To see the live streaming,  open the new terminal in the host system and enter below command. Also make sure you have installed the ‘vlc player’ on the host system in order to view video playback. 
-                 $ adb forward tcp:8900 tcp:8900
-                 $ vlc -vvv tcp://127.0.0.1:8900
+**To Download video**: 
+- Using the adb pull command we can download the video to the host system.
+    ```
+      $ adb pull /data/4k.mp4
+    ```   
+- To see the live streaming,  open the new terminal in the host system and enter below command. Also make sure you have installed the ‘vlc player’ on the host system in order to view video playback. 
+   ```
+      $ adb forward tcp:8900 tcp:8900
+      $ vlc -vvv tcp://127.0.0.1:8900
+   ```  
+   
+   
