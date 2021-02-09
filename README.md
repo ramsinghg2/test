@@ -1,4 +1,5 @@
-# The main objective of this application is integrate the azure iot c sdk and control the camera streaming and also send the status of  camera recording to azure iot-hub.
+#  AZURE IoT C SDK integration into the QCS610 and Data posting to Azure Iot-hub
+- The main objective of this application is integrate the azure iot c sdk and control the camera streaming and also send the status of  camera recording to azure iot-hub.
 
 ## About the project
   In this project, one can integrate the Azure IOT C sdk into the c610 platform and also create a small application to control the camera streaming and notify the status of camera to azure iot hub. The source tree of the project starts with the application directory (/home/user/azure)
@@ -25,13 +26,13 @@
 ### Setting up the Application SDK on the host system.
        
   - To Install application sdk, Download the Application SDK from below url:
+      ```
       -  https://thundercomm.s3.ap-northeast-1.amazonaws.com/shop/doc/1593776185472315/Turbox-C610_Application-SDK_v1.0.tar.gz
-  
+      ```
    - Unpack the sdk using below command 
        ```
         tar -xzvf Turbox-C610_Application-SDK_v1.0.tar.gz
        ```
-
    - Execute the below script file, it will ask the default target directory, press enter and input 'Y'
        ```
        ./oecore-x86_64-armv7ahf-neon-toolchain-nodistro.0.sh
@@ -41,18 +42,18 @@
 ### 2. Camera Environment configuration setup on the target device.
    -  To setup the camera environment configuration follow the given document ‘Turbox-C610_Open_Kit_Software_User_Manual_LE1.0_v2.0.pdf’ In given url 
     
- ```
-  “https://www.thundercomm.com/app_en/product/1593776185472315” 
+      ```
+      “https://www.thundercomm.com/app_en/product/1593776185472315” 
     
- ```
+      ```
     and refer section 2.10.1
 
 ### 3. Setting up Resource group and register the device on azure iot-hub
    - To setup the resource group and register the new  device on iot hub please follow the below link    
-   ```
-   https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
+     ```
+      https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
    
-   ```
+     ```
   - Note: once the setup is done, note down the primary  connection string of both registered new device as well as iot hub. 
 Steps to build and run the application: 
 
@@ -86,7 +87,7 @@ Steps to build and run the application:
      ```
      $ adb shell
      /#
-      ``` 
+     ``` 
   -  To enable wifi connectivity on target board
       ```  
        /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/Wpa_Supplicant.conf -ddddt &
@@ -100,8 +101,8 @@ Steps to build and run the application:
       ```   
   - To start the application run below command
       ```
- /# ./iottest
-       ```
+      /# ./iottest
+      ```
  - After executing the above command, the qcs610 device will wait for the command from iot hub, once it receives, it will do the required command action.
 
 ## Event monitoring on azure iot hub,
@@ -109,21 +110,23 @@ Steps to build and run the application:
     Install azure cli on host system
     ```   
     $ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-   ```
+    ```
    Login to azure 
    ```
       $ az login
-    ```
+   ```
   - This will open the default browser, you can enter your login credentials. After login, for monitor the device messages, execute below command
     ```      
       $ az iot hub monitor-events --hub-name <iot hub name> --device-id  <devicename>
     ```  
 ## For sending command from iot hub to device,
-  - Open the new terminal on the host system and traverse to the repo directory.  Edit the c2d.py file and replace the ‘CONNECTION_STRING’ details with iothub primary connection string and replace the ‘DEVICE_ID’ details with device name.   
+   - Open the new terminal on the host system and traverse to the repo directory.  Edit the c2d.py file and replace the ‘CONNECTION_STRING’ details with iothub primary connection string and replace the ‘DEVICE_ID’ details with device name.   
+  
   - Install the azure iot-hub on the host device.
-     ```
+  
+    ```
       $ pip install azure-iot-hub 
-     ``` 
+    ``` 
    - Execute the python script and send the commands via command line option. To start the 4k video recording on qcs610 
      ```
      $ python3 c2d.py start4k    
@@ -134,11 +137,11 @@ Steps to build and run the application:
      ```
   - For the different video options, you can refer the below table,
 
-| Video options | start | stop | 
-|  :---: | :---: | :---: |
-| 4K Video | start4k | stop4k |
-| Hd video | startHD | stopHD |
-| Tcp Streaming | videotcp | stoptcp |
+      | Video options | start | stop | 
+      | :---: | :---: | :---: |
+      | 4K Video | start4k | stop4k |
+      | Hd video | startHD | stopHD |
+      | Tcp Streaming | videotcp | stoptcp |
 
 
 -  Once the qcs610 receives the command, it will start capturing the video based on the video options. It will send the camera status to iothub and the message can be shown on the event monitoring terminal.
