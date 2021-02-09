@@ -92,7 +92,7 @@
      ``` 
   -  To enable wifi connectivity on target board
       ```  
-       /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/Wpa_Supplicant.conf -ddddt &
+       /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/wpa_supplicant.conf -ddddt &
        /# dhcpcd wlan0
       ```  
    -  Export the shared library to the LD_LIBRARY_PATH
