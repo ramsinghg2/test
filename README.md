@@ -58,26 +58,26 @@
 ### Steps to build and run the application: 
 
 ## Building the camera application:
-**Step-1** : Enter below command to set up the cross compilation environment on the host system.
+- **Step-1** : Enter below command to set up the cross compilation environment on the host system.
     ```
     $ git clone <source repository>
     $ cd  <source repository> 
     $ source /usr/local/oecore-x86_64/environment-setup-armv7ahf-neon-oe-linux-gnueabi
     ```
-**Step-2** :Build the camera application binary using below command .                                       
- **Note:**  before starting building, to add secure communication, open the main.c file and replace the connection string details with device primary connection string.  
+- **Step-2** :Build the camera application binary using below command.                                       
+ - **Note:**  before starting building, to add secure communication, open the main.c file and replace the connection string details with device primary connection string.  
     ```
      $CC main.c video_record.c -o iottest `pkg-config --cflags --libs gstreamer-1.0`  -I ./azureiot/ -L ./lib -liothub_client -laziotsharedutil-liothub_client_mqtt_transport -liothub_client_amqp_transport -luamqp -lumqtt -lparson
      ```    
 
-**Step-3** : initialize the target board with root access.
+- **Step-3** : initialize the target board with root access.
       ```
       $ adb root 
       $ adb remount 
       $ adb shell  mount -o remount,rw /
       $ adb forward tcp:8900 tcp:8900
       ```
-**Step-4** : Push the application binary and azure iot shared library to the target board with adb command.
+- **Step-4** : Push the application binary and azure iot shared library to the target board with adb command.
       ```
       $ adb push iottest /data/azure/
       $ adb push lib/  /data/azure/
