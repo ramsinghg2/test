@@ -58,18 +58,19 @@
 ## Building the camera application:
 
 **Step-1** : Enter below command to set up the cross compilation environment on the host system.
-    ```
-    $ git clone <source repository>
-    $ cd  <source repository> 
-    $ source /usr/local/oecore-x86_64/environment-setup-armv7ahf-neon-oe-linux-gnueabi
-    ```
+    
+     ```
+        $ git clone <source repository>
+        $ cd  <source repository> 
+        $ source /usr/local/oecore-x86_64/environment-setup-armv7ahf-neon-oe-linux-gnueabi
+     ```
     
 **Step-2** :Build the camera application binary using below command.                                       
  - **Note:**  before starting building, to add secure communication, open the main.c file and replace the connection string details with device primary connection string.  
-    ```
-     $CC main.c video_record.c -o iottest `pkg-config --cflags --libs gstreamer-1.0`  -I ./azureiot/ -L ./lib -liothub_client -laziotsharedutil-liothub_client_mqtt_transport -liothub_client_amqp_transport -luamqp -lumqtt -lparson
-     ```    
-
+      ```
+       $CC main.c video_record.c -o iottest `pkg-config --cflags --libs gstreamer-1.0`  -I ./azureiot/ -L ./lib -liothub_client -laziotsharedutil -liothub_client_mqtt_transport -liothub_client_amqp_transport -luamqp -lumqtt -lparson
+      ```    
+      
 **Step-3** : initialize the target board with root access.
       ```
       $ adb root 
@@ -83,6 +84,7 @@
       $ adb push iottest /data/azure/
       $ adb push lib/  /data/azure/
       ```      
+      
 ## Execute the binary file in the target environment.
    - To start the application, run the below commands on the qcs610 board, 
      ```
