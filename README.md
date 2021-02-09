@@ -43,7 +43,6 @@
    -  To setup the camera environment configuration follow the given document ‘Turbox-C610_Open_Kit_Software_User_Manual_LE1.0_v2.0.pdf’ In given url
       ```
       “https://www.thundercomm.com/app_en/product/1593776185472315” 
-    
       ```
    and refer section 2.10.1
 
@@ -51,7 +50,6 @@
    - To setup the resource group and register the new  device on iot hub please follow the below link    
      ```
       https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
-   
      ```
    - Note: once the setup is done, note down the primary  connection string of both registered new device as well as iot hub. 
 
@@ -88,8 +86,8 @@
 ## Execute the binary file in the target environment.
    - To start the application, run the below commands on the qcs610 board, 
      ```
-     $ adb shell
-     /#
+        $ adb shell
+        /#
      ``` 
   -  To enable wifi connectivity on target board
       ```  
@@ -132,11 +130,11 @@
     ``` 
    - Execute the python script and send the commands via command line option. To start the 4k video recording on qcs610 
      ```
-     $ python3 c2d.py start4k    
+     $ python3 cloud2device.py start4k    
      ``` 
   -  To stop the current recording on qcs610
      ```   
-        $ python3 c2d.py stop4k    
+        $ python3 cloud2device.py stop4k    
      ```
   - For the different video options, you can refer the below table,
 
