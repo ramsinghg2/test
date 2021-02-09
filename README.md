@@ -58,7 +58,6 @@
 ## Building the camera application:
 
 **Step-1** : Enter below command to set up the cross compilation environment on the host system.
-
       ```
         $ git clone <source repository>
         $ cd  <source repository> 
@@ -72,7 +71,6 @@
       ```    
       
 **Step-3** : initialize the target board with root access.
-
     ```
         $ adb root 
         $ adb remount 
@@ -81,7 +79,6 @@
     ```
       
 **Step-4** : Push the application binary and azure iot shared library to the target board with adb command.
-
     ```
       $ adb push iottest /data/azure/
       $ adb push lib/  /data/azure/
