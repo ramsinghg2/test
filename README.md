@@ -39,9 +39,8 @@
        ```
    - Now the environment setup is complete.
 
-### 2. Camera Environment configuration setup on the target device.
-   -  To setup the camera environment configuration follow the given document ‘Turbox-C610_Open_Kit_Software_User_Manual_LE1.0_v2.0.pdf’ In given url 
-    
+ ### 2. Camera Environment configuration setup on the target device.
+   -  To setup the camera environment configuration follow the given document ‘Turbox-C610_Open_Kit_Software_User_Manual_LE1.0_v2.0.pdf’ In given url
       ```
       “https://www.thundercomm.com/app_en/product/1593776185472315” 
     
@@ -54,8 +53,9 @@
       https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
    
      ```
-  - Note: once the setup is done, note down the primary  connection string of both registered new device as well as iot hub. 
-Steps to build and run the application: 
+   - Note: once the setup is done, note down the primary  connection string of both registered new device as well as iot hub. 
+
+### Steps to build and run the application: 
 
 ## Building the camera application:
 **Step-1** : Enter below command to set up the cross compilation environment on the host system.
