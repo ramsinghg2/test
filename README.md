@@ -69,34 +69,42 @@ Steps to build and run the application:
      $CC main.c video_record.c -o iottest `pkg-config --cflags --libs gstreamer-1.0`  -I ./azureiot/ -L ./lib -liothub_client -laziotsharedutil-liothub_client_mqtt_transport -liothub_client_amqp_transport -luamqp -lumqtt -lparson
  ```    
 
-Step-3 : initialize the target board with root access.
+**Step-3** : initialize the target board with root access.
+  ```
+      $ adb root 
+      $ adb remount 
+      $ adb shell  mount -o remount,rw /
+      $ adb forward tcp:8900 tcp:8900
+  ```
+**Step-4** : Push the application binary and azure iot shared library to the target board with adb command.
+   ```
+      $ adb push iottest /data/azure/
+      $ adb push lib/  /data/azure/
+   ```      
+## Execute the binary file in the target environment.
+   - To start the application, run the below commands on the qcs610 board, 
+```
+     $ adb shell
+     /#
+ ``` 
+  -  To enable wifi connectivity on target board
+   ```  
+     /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/Wpa_Supplicant.conf -ddddt &
+     /# dhcpcd wlan0
+   ```  
+   -  Export the shared library to the LD_LIBRARY_PATH
+  ```
+    / # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/azure/lib/
+    /# cd data/azure/
+  
+  ```   
+  - To start the application run below command
+ ```
+ /# ./iottest
+ ```
+ - After executing the above command, the qcs610 device will wait for the command from iot hub, once it receives, it will do the required command action.
 
-              $ adb root 
-              $ adb remount 
-              $ adb shell  mount -o remount,rw /
-              $ adb forward tcp:8900 tcp:8900
-
-Step-4 : Push the application binary and azure iot shared library to the target board with adb command.
-                $ adb push iottest /data/azure/
-                $ adb push lib/  /data/azure/
-         
-Execute the binary file in the target environment.
-            To start the application, run the below commands on the qcs610 board, 
-
-                   $ adb shell
-                   /# 
-                    To enable wifi connectivity on target board
-                   /# wpa_supplicant -Dnl80211 -iwlan0 -c /etc/misc/wifi/Wpa_Supplicant
-.conf -ddddt &
-                   /# dhcpcd wlan0
-                   Export the shared library to the LD_LIBRARY_PATH
-                  / # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/azure/lib/
-                  /# cd data/azure/
-                 To start the application run below command
-                  /# ./iottest
-          After executing the above command, the qcs610 device will wait for the command from iot hub, once it receives, it will do the required command action.
-
-Event monitoring on azure iot hub,
+## Event monitoring on azure iot hub,
          Open the new terminal on the host system
           Install azure cli on host system
            $ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
