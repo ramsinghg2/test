@@ -17,6 +17,7 @@
                                    - contain the onnx modelfile
                        - tf_model
                                   - contain tensor flow model file
+                       - readme.md
 
 ## Dependencies
 - Ubuntu System 18.04 or above
