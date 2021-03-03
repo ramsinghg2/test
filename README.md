@@ -54,13 +54,13 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-
  
 - Next to deploy the model, we need to fill the required details in the inferConfig.py file, require details includes  
 
-- Subscription ID              : provide your subscription id
-- Resource group name          : provide the resource group name
-- Workspace name               : provide the name of workspace you want to create
-- Tenant ID                    : provide your tenant id
-- Model path and model details : provide the local path of model and model details 
-- Conda environment details    : provide conda env details and installation packages, 
-- Instance details             : provide compute service name,   
+   - Subscription ID              : provide your subscription id
+   - Resource group name          : provide the resource group name
+   - Workspace name               : provide the name of workspace you want to create
+   - Tenant ID                    : provide your tenant id
+   - Model path and model details : provide the local path of model and model details 
+   - Conda environment details    : provide conda env details and installation packages, 
+   - Instance details             : provide compute service name,   
 
 - **Note** : To run the application, you may require to provide details of subscription id, resource group name and tenant ID,  other details are already present in the config file.
 
