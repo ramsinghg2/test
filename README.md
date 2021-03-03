@@ -100,9 +100,8 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-
          /# cd data/azure/
      ```    
    -  Run the inference script with the command line option as the number of sec applications need to run. 
-    
-     ``` 
+     
+    ``` 
          /# python3 inference.py 10
-     ```  
-    
+    ```  
   - The python script will capture the video from gstreamer plugin using opencv api. It will do inference on every two seconds and display the inference output on the terminal. Python script closes the application after 10 sec.
