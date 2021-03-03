@@ -11,6 +11,9 @@
                        -  inference.py
                        -  lib
                                    - contain shared libraries of opencv
+                       -  python_lib/
+                                   - contain the python library required for importing  the  requests module 
+
                        -  Inference /
                                    - local_inference.py
                        - model
@@ -83,6 +86,7 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-
    ```       
          $ adb push inference.py /data/azureml/
          $ adb push lib/  /data/azureml/
+         $ adb push python_lib/*  /usr/lib/python3.5/
    ```
 
 **Step-3** :   To start the application, run the below commands on the qcs610 board, 
@@ -101,7 +105,7 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-
          /# cd data/azure/
      ```    
    -  Run the inference script with the command line option as the number of sec applications need to run. 
-      ``` 
+      `` python3 inference.py <no of seconds>
         /# python3 inference.py 10
       ```  
   - The python script will capture the video from gstreamer plugin using opencv api. It will do inference on every two seconds and display the inference output on the terminal. Python script closes the application after 10 sec.
