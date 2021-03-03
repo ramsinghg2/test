@@ -15,7 +15,7 @@
                                    - local_inference.py
                        - model
                                    - contain the onnx modelfile
-                      - tf_model
+                       - tf_model
                                   - contain tensor flow model file
 
 ## Dependencies
@@ -100,7 +100,8 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-
          /# cd data/azure/
      ```    
    -  Run the inference script with the command line option as the number of sec applications need to run. 
-     ``` 
+    
+    ``` 
          /# python3 inference.py 10
      ```  
     
