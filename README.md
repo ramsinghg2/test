@@ -101,7 +101,7 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-
      ```    
    -  Run the inference script with the command line option as the number of sec applications need to run. 
     
-    ``` 
+     ``` 
          /# python3 inference.py 10
      ```  
     
