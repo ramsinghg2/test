@@ -3,18 +3,23 @@
 ## About the project
 - In this project, we are performing barcode region detection and recognition of the EAN-13 type barcode in the given image. 
 - Application source tree on the host system:
-           fastcvSampleTest/
+
+           barcodeTest/
                                  inc/
                                         - fastcv.h
+                                        - barcode_decoder.h
                                          stb/
                                                -  stb_image.h
                                                -  stb_image_write.h 
+                                         opencv2/
+                                               - contain opencv library    
                                   lib/                                  
                                          - contain fastcv and opencv libraries
                                   src/
-                                         - fastcvSampleTest.cpp
+                                         - barcode_decoding.cpp
+                                         - main.c   
                                   sampleImage/
-                               Contain barcode images for testing                       
+                                         Contain barcode images for testing                       
                                   Makefile
                                   UbuntuARM.min
                                                                                       
@@ -78,7 +83,7 @@
      ```
         $ github clone <source repository>
         $ cd <source repository>
-        $ cp fastcvSimpleTest <Hexagon_SDK_ROOT>/examples/common/
+        $ cp barcodeTest <Hexagon_SDK_ROOT>/examples/common/
      ```    
      
 - source the setup_sdk_env.source 
@@ -88,33 +93,32 @@
       $ cd examples/common/fastcvSimpleTest
       $ make tree V=UbuntuARM_Release  
    ```
- - Note: while integrating opencv code into fastcv, we may get following errors (Similar error)
+- **Note**: while integrating opencv code into fastcv, we may get following errors (Similar error)
   ```
     /home/admin/Hexagon_SDK/3.5.2/tools/linaro/arm-linux-gnueabihf/include/c++/7.5.0/cstdlib:75:15: fatal error: stdlib.h: No such file or directory
     #include_next <stdlib.h>
                ^~~~~~~~~~
      To Fix this:Replace **#include_next** with **#include** in the cstdlib file from the path above.
-```
-   
+```  
 - Remount the root directory writable:
   ```
            $ adb root
            $ adb remount
            $ adb shell mount -o remount,rw /
    ```
--  Push the fastcvSimpleTest binary file and input image to the target:
+-  Push the barcodeTest binary file and input image to the target:
    ```
-          $ adb push UbuntuARM_Release\ship\fastcvSimpleTest  /data/barcode
+          $ adb push UbuntuARM_Release\ship\barcodeTest  /data/barcode
           $ adb push sampleImage  /data/barcode/
    ```
 - Change bin permissions and execute the application executable:
    ```
           $ adb shell
-          /# chmod +x /data/barcode/fastcvsampleTest
+          /# chmod +x /data/barcode/barcodeTest
           /#  cd /data/barcode/
           to test with sample image  
-          /# ./fastcvSimpleTest  sampleImage/barcode_img.jpg
+          /# ./barcode  sampleImage/barcode_img.jpg
           to test with qcs610 camera 
-          /# ./fastcvSimpleTest camera
+          /# ./barcode camera
    ```
 Then barcode numbers are displayed on the terminal.      
