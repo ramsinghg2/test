@@ -110,15 +110,18 @@
    ```
           $ adb push UbuntuARM_Release\ship\barcodeTest  /data/barcode
           $ adb push sampleImage  /data/barcode/
+          $ adb push lib/  /data/barcode/
    ```
 - Change bin permissions and execute the application executable:
    ```
           $ adb shell
+          /# 
           /# chmod +x /data/barcode/barcodeTest
+          /# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/barcode/lib/
           /#  cd /data/barcode/
           to test with sample image  
           /# ./barcode  sampleImage/barcode_img.jpg
           to test with qcs610 camera 
-          /# ./barcode camera
+          /# ./barcodeTest camera
    ```
 Then barcode numbers are displayed on the terminal.      
